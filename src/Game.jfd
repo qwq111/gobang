@@ -1,0 +1,127 @@
+JFDML JFormDesigner: "7.0.3.0.337" Java: "11.0.8" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"title": "装模做样的五子棋"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+				"columns": 3
+			} ) {
+				name: "manu"
+				add( new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+					name: "menuBar1"
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menu1"
+						"text": "模式选择"
+						"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 1, 1, false )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem1"
+							"text": "双人模式"
+							"font": #SwingDerivedFont0
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "menuItem1MousePressed", true ) )
+						} )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem2"
+							"text": "人机模式"
+							"font": #SwingDerivedFont0
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "menuItem2MousePressed", true ) )
+						} )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem7"
+							"text": "观战人机"
+							"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 1, false )
+					
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "menuItem7MousePressed", true ) )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menu3"
+						"text": "游戏功能"
+						"font": #SwingDerivedFont0
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem3"
+							"text": "重新开始"
+							"font": #SwingDerivedFont0
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "menuItem3MousePressed", true ) )
+						} )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem4"
+							"text": "悔棋"
+							"font": #SwingDerivedFont0
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "menuItem4MousePressed", true ) )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menu2"
+						"text": "切换主题"
+						"font": #SwingDerivedFont0
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem5"
+							"text": "切换背景"
+							"font": #SwingDerivedFont0
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "menuItem5MousePressed", true ) )
+						} )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem6"
+							"text": "切换音乐"
+							"font": #SwingDerivedFont0
+						} )
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+					name: "top"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+					name: "panel1"
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label1"
+						"text": "当前模式"
+						"foreground": &Color0 new java.awt.Color( 255, 51, 102, 255 )
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label4"
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label2"
+						"text": "执棋方"
+						"foreground": #Color0
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label5"
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label3"
+						"text": "用时"
+						"foreground": #Color0
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label6"
+					} )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "North"
+			} )
+			add( new FormComponent( "PieceBoardPanel" ) {
+				name: "pieceboard"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "pieceboardMouseClicked", true ) )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+				name: "footer"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label8"
+					"text": "版权所有 -啥都做不出来小队"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 3, false )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "South"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 45, 25 )
+			"size": new java.awt.Dimension( 695, 535 )
+		} )
+	}
+}
