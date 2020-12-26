@@ -32,7 +32,7 @@ new FormModel {
 							name: "menuItem7"
 							"text": "观战人机"
 							"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 1, false )
-							addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "menuItem7MouseClicked", true ) )
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "menuItem7MousePressed", true ) )
 						} )
 					} )
 					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {

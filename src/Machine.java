@@ -1,6 +1,9 @@
+import java.sql.Time;
+import java.util.Random;
+
 public class Machine extends Player{
     private int[][] score=new int[Setting.BOARD_SIZE][Setting.BOARD_SIZE];
-
+    private Random random=new Random();
     public Machine(String name, PieceBoard board,int chess) {
         super(name,board, chess);
     }
@@ -183,13 +186,37 @@ public class Machine extends Player{
             }
         }
 
-        //从空位置中找到得分最大的位置
-        for(int i = 0; i < Setting.BOARD_SIZE; i++){
-            for(int j = 0; j < Setting.BOARD_SIZE; j++){
-                if(chessboard[i][j] == 0 && score[i][j] > maxScore){
-                    goalX = i;
-                    goalY = j;
-                    maxScore = score[i][j];
+        //从空位置中随机找到得分最大的位置
+        {
+            int maxNums = 0;//权重最大的数量
+            //获取权重最大的值，和数量
+            for (int i = 0; i < Setting.BOARD_SIZE; i++) {
+                for (int j = 0; j < Setting.BOARD_SIZE; j++) {
+                    if (chessboard[i][j] == 0) {
+                        if (score[i][j] > maxScore) {
+                            goalX = i;
+                            goalY = j;
+                            maxScore = score[i][j];
+                            maxNums = 1;
+                        } else if (score[i][j] == maxScore) {
+                            maxNums++;
+                        }
+                    }
+                }
+            }
+            //随机获取一个
+            System.out.println("方案个数:"+maxNums);
+            int maxN = random.nextInt(maxNums)+1;
+            System.out.println("选择方案:"+maxNums);
+
+            for (int i = 0; i < Setting.BOARD_SIZE && maxN>0; i++) {
+                for (int j = 0; j < Setting.BOARD_SIZE&& maxN>0; j++) {
+                    if (chessboard[i][j] == 0&&score[i][j] == maxScore) {
+                        goalX = i;
+                        goalY = j;
+                        maxScore = score[i][j];
+                        maxN--;
+                    }
                 }
             }
         }

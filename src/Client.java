@@ -5,6 +5,5 @@ public class Client {
         new Setting();
         // ©╙й╪сно╥
         JFrame UI=new Game();
-        UI.setVisible(true);
     }
 }

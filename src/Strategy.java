@@ -1,3 +1,3 @@
 interface Strategy {
-    void playGame();
+    void playGame(Position p);
 }

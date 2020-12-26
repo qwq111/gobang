@@ -112,8 +112,8 @@ public class PieceBoardPanel extends JPanel implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
+        paintPieces(getGraphics());
         System.out.println("ÆåÅÌ×´Ì¬¸Ä±ä");
-        repaint();
     }
 
 }

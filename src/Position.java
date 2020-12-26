@@ -48,4 +48,13 @@ public class Position implements Cloneable{
         this.x=x;
         this.y=y;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "chess=" + chess +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
