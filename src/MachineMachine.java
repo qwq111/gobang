@@ -21,7 +21,7 @@ public class MachineMachine implements Strategy {
             }
             flag=!flag;
             try{
-                Thread.sleep(200);
+                Thread.sleep(500);
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }

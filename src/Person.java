@@ -6,6 +6,7 @@ public class Person extends Player{
 
     @Override
     public void play(int x, int y) {
+        super.play(x,y);
         Position p = null;
         piece.setX(x);
         piece.setY(y);

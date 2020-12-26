@@ -1,4 +1,9 @@
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
+import java.io.File;
+import java.net.URI;
+import java.net.URL;
 
 /**
  * Æå×ÓÀà
@@ -8,6 +13,7 @@ import java.awt.*;
 public abstract class Piece {
     protected int size;
     protected Image image;
+
 
     public Piece(Image image) {
         this.image = image;

@@ -276,6 +276,7 @@ public class Machine extends Player{
 
     @Override
     public void play(int x, int y) {
+        super.play(x,y);
         Position p = searchPosition();
         board.setPiece(p);
     }

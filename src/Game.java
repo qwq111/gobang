@@ -4,9 +4,13 @@
 
 import javafx.geometry.Pos;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.event.*;
 
 import java.awt.*;
+import java.net.URI;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -25,6 +29,9 @@ public class Game extends JFrame implements Observer {
     private static Strategy strategy ;//模式判断，0人人，1人机,2机器对战
     private Position p = null;
     private Date date=new Date();
+    private AudioClip backgroundMusic;
+
+
 
 
     //时间刷新器
@@ -69,6 +76,17 @@ public class Game extends JFrame implements Observer {
         board.addObserver(pieceboard);
         board.addObserver(this);
         label5.setText("黑");
+
+        //音乐
+        try{
+            URI uri=Setting.backgroundMusic[0].toURI();
+            URL url=uri.toURL();
+            backgroundMusic= Applet.newAudioClip(url);
+            backgroundMusic.play();
+            backgroundMusic.loop();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
 
         //设置图标

@@ -10,6 +10,7 @@ public class BlackPiece extends Piece{
 
     @Override
     public void paint(Graphics g, int X, int Y) {
+
         g.drawImage(image,X-size/2,Y-size/2,size,size,null);
     }
 }
