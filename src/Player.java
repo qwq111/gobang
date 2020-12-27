@@ -37,6 +37,10 @@ public abstract class Player {
         }
     }
 
+    public boolean isPlay(){
+        return board.isPlay();//获取棋盘是否能下
+    }
+
     public void play(int x, int y){
         music.play();
     }

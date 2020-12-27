@@ -2,7 +2,6 @@
  * Created by JFormDesigner on Thu Dec 17 22:33:24 CST 2020
  */
 
-import javafx.geometry.Pos;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
@@ -12,7 +11,6 @@ import java.awt.*;
 import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -22,13 +20,13 @@ import javax.swing.Timer;
  */
 
 public class Game extends JFrame implements Observer {
-    private BackGround backGround = new BackGround(); //创建背景
-    private PieceBoard board = new PieceBoard(Setting.BOARD_SIZE);// 棋盘
-    private Judge judge = new Judge(board);//裁判
-    private Player player1,player2,machine1,machine2; // 玩家创建
-    private static Strategy strategy ;//模式判断，0人人，1人机,2机器对战
-    private Position p = null;
-    private Date date=new Date();
+    private final BackGround backGround; //创建背景
+    private final PieceBoard board;// 棋盘
+    private final Judge judge;//裁判
+    private final Strategy doubleMan;
+    private final Strategy manMachine;
+    private final Strategy machineMachine;
+    private Strategy strategy ;//模式判断，0人人，1人机,2机器对战
     private AudioClip backgroundMusic;
 
 
@@ -36,6 +34,7 @@ public class Game extends JFrame implements Observer {
 
     //时间刷新器
     private Timer time=new javax.swing.Timer(500,new ActionListener() {
+        private Date date=new Date();
         @Override
         public void actionPerformed(ActionEvent arg0) {
             label6.setText(new SimpleDateFormat("mm:ss").format(new Date().getTime()-date.getTime()));
@@ -49,22 +48,46 @@ public class Game extends JFrame implements Observer {
         //逻辑层构建
         board.clear();
         repaint();
-        date=new Date();
-        time.start();
+        time.restart();
     }
 
 
     public Game() {
+        //初始化变量
+        //背景
+        backGround=new BackGround();
+        board = new PieceBoard(Setting.BOARD_SIZE);
+        judge = new Judge(board);
+
+
+
+        //音乐
+        try{
+            URI uri=Setting.backgroundMusic[1].toURI();
+            URL url=uri.toURL();
+            backgroundMusic= Applet.newAudioClip(url);
+            backgroundMusic.play();
+            backgroundMusic.loop();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
         getLayeredPane().add(backGround, new Integer(Integer.MIN_VALUE));
         ((JPanel)getContentPane()).setOpaque(false);
 
+
+
         initComponents();
         // 构建逻辑层
-        player1 = new Person("小王",board,1);
-        player2 = new Person("小黑",board,2);
-        machine1 = new Machine("机器1",board,1);
-        machine2 = new Machine("机器2",board,2);
-        strategy = new DoubleMan(player1,player2);
+        Player player1 = new Person("小王",board,1);
+        Player player2 = new Person("小黑",board,2);
+        Player machine1 = new Machine("机器1",board,1);
+        Player machine2 = new Machine("机器2",board,2);
+        doubleMan = new DoubleMan(player1,player2);
+        manMachine=new ManMachine(player1,player2);
+        machineMachine=new MachineMachine(machine1,machine2);
+        strategy = doubleMan;
         label4.setText("双人模式");
         pieceboard.setBoard(board);
 
@@ -77,16 +100,6 @@ public class Game extends JFrame implements Observer {
         board.addObserver(this);
         label5.setText("黑");
 
-        //音乐
-        try{
-            URI uri=Setting.backgroundMusic[0].toURI();
-            URL url=uri.toURL();
-            backgroundMusic= Applet.newAudioClip(url);
-            backgroundMusic.play();
-            backgroundMusic.loop();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
 
 
         //设置图标
@@ -99,6 +112,7 @@ public class Game extends JFrame implements Observer {
         this.footer.setOpaque(false);
         //展示窗口
         this.setVisible(true);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         init();
     }
 
@@ -109,26 +123,20 @@ public class Game extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         //如果是裁判的动作
         if(o.getClass()== Judge.class) {
-            Player player = null;
-            time.stop();
-            if ((int) arg == player1.getChess())
-                player = player1;
-            else if((int) arg == player2.getChess())
-                player = player2;
-            PieceBoard.flag = 1;
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             if((int) arg !=0 ) {
-                JOptionPane.showConfirmDialog(null, "黑白".charAt(player.getChess()-1) + "方获得了胜利", "游戏结束提示",
+                JOptionPane.showConfirmDialog(null, "黑白".charAt((int) arg-1) + "方获得了胜利", "游戏结束提示",
                         JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
             }else{
                 JOptionPane.showConfirmDialog(null, "游戏结束，没有人获得胜利", "游戏结束提示",
                         JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
             }
-
+            //计时停止
+            time.stop();
         }
         //棋盘通知当前执棋人
         if(o.getClass()==PieceBoard.class){
@@ -146,7 +154,7 @@ public class Game extends JFrame implements Observer {
     private void menuItem1MousePressed(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
             //点了双人模式
-            strategy = new DoubleMan(player1,player2);
+            strategy = doubleMan;
             label4.setText("双人模式");
             init();
         }
@@ -201,7 +209,7 @@ public class Game extends JFrame implements Observer {
     private void menuItem2MousePressed(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
             label4.setText("单人模式");
-            strategy = new ManMachine(player1,machine2);
+            strategy = manMachine;
             init();
         }
     }
@@ -209,8 +217,8 @@ public class Game extends JFrame implements Observer {
         // TODO add your code here
         if(e.getButton()==MouseEvent.BUTTON1){
             //点了观战人机
-            label4.setText("机器队长");
-            strategy = new MachineMachine(machine1,machine2);
+            label4.setText("机器对弈");
+            strategy = machineMachine;
             init();
         }
     }
@@ -220,7 +228,7 @@ public class Game extends JFrame implements Observer {
      */
     private void pieceboardMouseClicked(MouseEvent e) {
         //获取棋盘的起始坐标
-        if(PieceBoard.flag == 1) return;//如果已经结束游戏
+        if(!board.isPlay()) return;//如果已经结束游戏
         if(e.getButton() == MouseEvent.BUTTON1) {//如果没有结束游戏
             int boardX = pieceboard.getBoardX();
             int boardY = pieceboard.getBoardY();
@@ -233,9 +241,9 @@ public class Game extends JFrame implements Observer {
                 if(board.check(x,y)){
                     System.out.println("可以下棋");
                     //当前应该下的棋子
-                    p = board.getLast();
-                    if(p==null){
-                        p=new Position(1,x,y);
+                    Position p = board.getLast();
+                    if(p ==null){
+                        p =new Position(1,x,y);
                     }else {
                         p.nextPosition(x,y);
                     }

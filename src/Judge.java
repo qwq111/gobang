@@ -33,6 +33,7 @@ public class Judge extends Observable implements Observer {
             notifyObservers(0);
         }
         if(check(board.getPieces(),p)){
+            board.stop();//裁判调整棋盘状态，设置为不可以下棋
             setChanged();//通知观察者
             notifyObservers(p.getChess());
         }

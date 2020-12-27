@@ -14,7 +14,7 @@ public class PieceBoard extends Observable {
     private int size;//棋盘大小
     private int[][] pieces;//棋盘状态,0代表为空，1代表黑棋，2代表白棋
     private List<Position> chessManual;
-    public static int flag = 0;// 0 表示游戏开始，1表示游戏结束
+    private boolean flag;// 0 表示游戏开始，1表示游戏结束
 
     /**
      * 初始化棋盘
@@ -24,6 +24,7 @@ public class PieceBoard extends Observable {
         this.size = size;
         pieces=new int[size][size];
         chessManual=new ArrayList<>();
+        start();
     }
 
     /**
@@ -52,12 +53,15 @@ public class PieceBoard extends Observable {
         return p;
     }
 
+    /**
+     * 清空棋盘状态
+     */
     public void clear(){
         for(int[] p:pieces){
             Arrays.fill(p,0);
         }
         chessManual.clear();
-        flag = 0;
+        start();
     }
 
 
@@ -101,7 +105,7 @@ public class PieceBoard extends Observable {
             pieces[p.getX()][p.getY()]=0;
             chessManual.remove(p);
         }
-        flag = 0;
+        start();
     }
 
     /**
@@ -110,5 +114,15 @@ public class PieceBoard extends Observable {
      */
     public final List<Position> getChessManual() {
         return chessManual;
+    }
+
+    public boolean isPlay() {
+        return flag;
+    }
+    public void start(){
+        flag = true;
+    }
+    public void stop(){
+        flag = false;
     }
 }

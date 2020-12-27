@@ -12,12 +12,14 @@ public class MachineMachine implements Strategy {
     @Override
     public void playGame(Position p) {
         boolean flag = true;
-        while(PieceBoard.flag==0){//游戏未结束
+        Player player = player1;
+        while(player.isPlay()){//游戏未结束
+            player1.play(0, 0);
             //人机对弈
             if(flag) {
-                player1.play(0, 0);
+                player= player2;
             }else{
-                player2.play(0,0);
+                player = player1;
             }
             flag=!flag;
             try{

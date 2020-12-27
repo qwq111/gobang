@@ -16,6 +16,7 @@ public class Setting {
 
     public final static File[] backgroundMusic=new File[]{
             new File("static/music/1.wav"),
+            new File("static/music/2.wav")
     };
     public static final int BOARD_SIZE = 19;
     public static File chessMusic = new File("static/music/chess.wav");
