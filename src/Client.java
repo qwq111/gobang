@@ -1,3 +1,6 @@
+import other.Game;
+import other.Setting;
+
 import javax.swing.*;
 
 public class Client {
