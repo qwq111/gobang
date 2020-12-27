@@ -11,18 +11,17 @@ import java.util.Observable;
  * 目标类，被观察者
  */
 public class PieceBoard extends Observable {
-    private Position p = new Position(1,1,1);//棋子
-    private int size;//棋盘大小
-    private int[][] pieces;//棋盘状态,0代表为空，1代表黑棋，2代表白棋
-    private List<PositionMemento> chessManual;
+    private final Position p = new Position(1,1,1);//棋子
+    private final int[][] pieces;//棋盘状态,0代表为空，1代表黑棋，2代表白棋
+    private final List<PositionMemento> chessManual;
     private boolean flag;// 0 表示游戏开始，1表示游戏结束
 
     /**
      * 初始化棋盘
-     * @param size
+     * @param size 棋盘大小
      */
     public PieceBoard(int size) {
-        this.size = size;
+        //棋盘大小
         pieces=new int[size][size];
         chessManual=new ArrayList<>();
         start();
@@ -30,14 +29,13 @@ public class PieceBoard extends Observable {
 
     /**
      * 检擦当前位置能否落子
-     * @param x
-     * @param y
-     * @return boolean
+     * @param x 逻辑位置横
+     * @param y 逻辑位置竖
+     * @return 成功返回true，失败返回false
      */
     public boolean check(int x,int y){
         //如果没有棋子
-        if(pieces[x][y]==0) return true;
-        return false;
+        return pieces[x][y] == 0;
     }
 
 
@@ -57,7 +55,7 @@ public class PieceBoard extends Observable {
 
     /**
      * 放置棋子
-     * @param p
+     * @param p 棋子位置信息
      */
     public void setPiece(Position p){
         pieces[p.getX()][p.getY()]=p.getChess();
@@ -69,7 +67,7 @@ public class PieceBoard extends Observable {
 
     /**
      * 返回逻辑棋盘，交给裁判类去判断胜利。
-     * @return
+     * @return 逻辑棋盘返回
      */
     public int[][] getPieces() {
         return pieces;
@@ -77,8 +75,7 @@ public class PieceBoard extends Observable {
 
 
     /**
-     * 返回当前棋子数量
-     * @return
+     * @return 返回棋子数量
      */
     public int getPieceNums() {
         return chessManual.size();

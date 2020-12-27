@@ -1,5 +1,5 @@
 import other.Game;
-import other.Setting;
+import config.Setting;
 
 import javax.swing.*;
 
@@ -7,6 +7,6 @@ public class Client {
     public static void main(String[] args) {
         new Setting();
         // ¿ªÊ¼ÓÎÏ·
-        JFrame UI=new Game();
+        Game game=new Game();
     }
 }

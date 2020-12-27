@@ -1,11 +1,6 @@
 package flyweight;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.*;
-import java.io.File;
-import java.net.URI;
-import java.net.URL;
 
 /**
  * 棋子类
@@ -23,9 +18,9 @@ public abstract class Piece {
 
     /**
      * 绘制棋子
-     * @param g
-     * @param X
-     * @param Y
+     * @param g 画笔
+     * @param X 绘画位置x
+     * @param Y 绘画位置y
      */
     public abstract void paint(Graphics g,int X,int Y);
 

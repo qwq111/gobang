@@ -1,6 +1,6 @@
 package flyweight;
 
-import other.Setting;
+import config.Setting;
 
 import java.awt.*;
 

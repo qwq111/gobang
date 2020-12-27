@@ -7,7 +7,8 @@ import player.Player;
  */
 public class DoubleMan implements Strategy{
     private boolean flag = true;//true棋手1下棋，false，棋手2下棋
-    private Player player1,player2;
+    private final Player player1;
+    private final Player player2;
 
     public DoubleMan(Player player1, Player player2) {
         this.player1 = player1;

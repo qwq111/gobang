@@ -3,8 +3,8 @@
   <component name="Encoding" defaultCharsetForPropertiesFiles="GBK" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
     <file url="file://$PROJECT_DIR$" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/META-INF/MANIFEST.MF" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/observer/PieceBoardPanel.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/other/Game.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/other/PieceBoardPanel.java" charset="GBK" />
     <file url="PROJECT" charset="GBK" />
   </component>
 </project>

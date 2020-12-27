@@ -2,13 +2,13 @@ package player;
 
 import memento.PieceBoard;
 import memento.Position;
-import other.Setting;
+import config.Setting;
 
 import java.util.Random;
 
 public class Machine extends Player{
-    private int[][] score=new int[Setting.BOARD_SIZE][Setting.BOARD_SIZE];
-    private Random random=new Random();
+    private final int[][] score=new int[Setting.BOARD_SIZE][Setting.BOARD_SIZE];
+    private final Random random=new Random();
     public Machine(String name, PieceBoard board, int chess) {
         super(name,board, chess);
     }
@@ -26,7 +26,7 @@ public class Machine extends Player{
         //先定义一些变量
         int humanChessmanNum = 0;//五元组中的黑棋数量
         int machineChessmanNum = 0;//五元组中的白棋数量
-        int tupleScoreTmp = 0;//五元组得分临时变量
+        int tupleScoreTmp;//五元组得分临时变量
         int goalX = -1;//目标位置x坐标
         int goalY = -1;//目标位置y坐标
         int maxScore = -1;//最大分数
@@ -50,7 +50,6 @@ public class Machine extends Player{
                 //置零
                 humanChessmanNum = 0;//五元组中的黑棋数量
                 machineChessmanNum = 0;//五元组中的白棋数量
-                tupleScoreTmp = 0;//五元组得分临时变量
             }
         }
 
@@ -72,7 +71,6 @@ public class Machine extends Player{
                 //置零
                 humanChessmanNum = 0;//五元组中的黑棋数量
                 machineChessmanNum = 0;//五元组中的白棋数量
-                tupleScoreTmp = 0;//五元组得分临时变量
             }
         }
 
@@ -100,7 +98,6 @@ public class Machine extends Player{
                 //置零
                 humanChessmanNum = 0;//五元组中的黑棋数量
                 machineChessmanNum = 0;//五元组中的白棋数量
-                tupleScoreTmp = 0;//五元组得分临时变量
 
             }
         }
@@ -128,7 +125,6 @@ public class Machine extends Player{
                 //置零
                 humanChessmanNum = 0;//五元组中的黑棋数量
                 machineChessmanNum = 0;//五元组中的白棋数量
-                tupleScoreTmp = 0;//五元组得分临时变量
 
             }
         }
@@ -157,7 +153,6 @@ public class Machine extends Player{
                 //置零
                 humanChessmanNum = 0;//五元组中的黑棋数量
                 machineChessmanNum = 0;//五元组中的白棋数量
-                tupleScoreTmp = 0;//五元组得分临时变量
 
             }
         }
@@ -186,7 +181,6 @@ public class Machine extends Player{
                 //置零
                 humanChessmanNum = 0;//五元组中的黑棋数量
                 machineChessmanNum = 0;//五元组中的白棋数量
-                tupleScoreTmp = 0;//五元组得分临时变量
 
             }
         }

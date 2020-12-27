@@ -42,7 +42,7 @@ public class Position{
 
     /**
      * 备忘录模式，生成备忘录
-     * @return
+     * @return 生成备忘录
      */
     public PositionMemento createMemento(){
         PositionMemento memento=new PositionMemento();

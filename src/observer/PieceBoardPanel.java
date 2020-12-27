@@ -1,14 +1,14 @@
-package other;/*
+package observer;/*
  * Created by JFormDesigner on Fri Dec 18 00:15:43 CST 2020
  */
 
-
+import config.Setting;
+import flyweight.PieceFactory;
 import memento.PieceBoard;
 import memento.Position;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 import javax.swing.*;
 
 /**
@@ -17,7 +17,6 @@ import javax.swing.*;
 public class PieceBoardPanel extends JPanel implements Observer{
     //对象类参数
     private PieceBoard board;//棋盘控制类
-    private Position p=null; //当前棋子
     //基础属性参数
     private int boardX;
     private int boardY; //X,Y棋盘的起始坐标
@@ -38,7 +37,7 @@ public class PieceBoardPanel extends JPanel implements Observer{
     @Override
     public void setBounds(int x, int y, int width, int height) {
         super.setBounds(x, y, width, height);
-        this.cellSize =( height > width?width:height)/ Setting.BOARD_SIZE;
+        this.cellSize =( Math.min(getHeight(),getWidth()))/ Setting.BOARD_SIZE;
         this.boardX=(width-(Setting.BOARD_SIZE-1)*this.cellSize)/2;
         this.boardY=(height-(Setting.BOARD_SIZE-1)*this.cellSize)/2;
     }
@@ -67,22 +66,23 @@ public class PieceBoardPanel extends JPanel implements Observer{
 
     /**
      * 绘制棋子
-     * @param g
+     * @param g 画笔
      */
     public void paintPieces(Graphics g){
         PieceFactory factory= PieceFactory.getInstance();//获得棋子工厂
         factory.setSize(cellSize);//设置棋子属性
         int nums = board.getPieceNums();
-        p = null;
+        //当前棋子
+        Position p = null;
         for(int i=0;i<nums;i++) {
             p = board.getPiece(i);
-            factory.getPiece(p.getChess()).paint(g, boardX+p.getX()*cellSize, boardY+p.getY()*cellSize);
+            factory.getPiece(p.getChess()).paint(g, boardX+ p.getX()*cellSize, boardY+ p.getY()*cellSize);
         }
         //绘制当前棋子的标记
         g.setColor(Color.RED);
-        if(p!=null)
-            g.fillOval(boardX+p.getX()*cellSize-cellSize/8,
-                    boardY+p.getY()*cellSize-cellSize/8,cellSize/4,cellSize/4);
+        if(p !=null)
+            g.fillOval(boardX+ p.getX()*cellSize-cellSize/8,
+                    boardY+ p.getY()*cellSize-cellSize/8,cellSize/4,cellSize/4);
     }
 
 

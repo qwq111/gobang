@@ -2,7 +2,7 @@ package player;
 
 import memento.PieceBoard;
 import memento.Position;
-import other.Setting;
+import config.Setting;
 
 import java.applet.Applet;
 import java.applet.AudioClip;

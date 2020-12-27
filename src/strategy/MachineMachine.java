@@ -1,13 +1,13 @@
 package strategy;
 
-import memento.Position;
 import player.Player;
 
 /**
  * 策略模式：具体策略，机器对弈
  */
 public class MachineMachine implements Strategy {
-    private Player player1,player2;
+    private final Player player1;
+    private final Player player2;
 
     public MachineMachine(Player player1, Player player2) {
         this.player1 = player1;
@@ -26,13 +26,13 @@ public class MachineMachine implements Strategy {
             }else{
                 player = player1;
             }
-            flag=!flag;
-            try{
-                Thread.sleep(500);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
 
+            for(int i=0;i<100010;i++){
+                if(i==100009){
+                    System.out.println("等待完成");
+                }
+            }
+            flag=!flag;
         }
     }
 

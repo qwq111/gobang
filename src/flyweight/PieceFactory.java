@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class PieceFactory {
     private static PieceFactory instance;
-    private List<Piece> pieces;
+    private final List<Piece> pieces; // Æå×Ó
 
     private PieceFactory() {
         this.pieces =new ArrayList<>();

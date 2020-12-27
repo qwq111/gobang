@@ -2,8 +2,12 @@ package other;/*
  * Created by JFormDesigner on Thu Dec 17 22:33:24 CST 2020
  */
 
+import command.*;
+import config.Setting;
 import memento.PieceBoard;
 import memento.Position;
+import observer.Judge;
+import observer.PieceBoardPanel;
 import player.Machine;
 import player.Person;
 import player.Player;
@@ -24,18 +28,18 @@ import javax.swing.Timer;
  */
 
 public class Game extends JFrame implements Observer {
-    private final BackGround backGround; //创建背景
     private final PieceBoard board;// 棋盘
     private final Judge judge;//裁判
     private final Strategy doubleMan;
     private final Strategy manMachine;
     private final Strategy machineMachine;
     private Strategy strategy ;//模式判断，0人人，1人机,2机器对战
+    private Command backGroundCommand, musicCommand;
 
 
 
     //时间刷新器
-    private Timer time=new javax.swing.Timer(500,new ActionListener() {
+    private final Timer time=new javax.swing.Timer(500,new ActionListener() {
         private Date date=new Date();
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -60,11 +64,14 @@ public class Game extends JFrame implements Observer {
         //初始化变量
         //背景
         backGround=new BackGround();
+        backGroundCommand=new BackGroundCommand(backGround);
+        Music music = new Music();
+        musicCommand = new MusicCommand(music);
+        music.play();
         board = new PieceBoard(Setting.BOARD_SIZE);
         judge = new Judge(board);
         getLayeredPane().add(backGround, new Integer(Integer.MIN_VALUE));
         ((JPanel)getContentPane()).setOpaque(false);
-
 
 
         // 构建逻辑层
@@ -73,7 +80,7 @@ public class Game extends JFrame implements Observer {
         Player machine1 = new Machine("机器1",board,1);
         Player machine2 = new Machine("机器2",board,2);
         doubleMan = new DoubleMan(player1,player2);
-        manMachine=new ManMachine(player1,player2);
+        manMachine=new ManMachine(player1,machine2);
         machineMachine=new MachineMachine(machine1,machine2);
         strategy = doubleMan;
         label4.setText("双人模式");
@@ -118,10 +125,10 @@ public class Game extends JFrame implements Observer {
             }
             if((int) arg !=0 ) {
                 JOptionPane.showConfirmDialog(null, "黑白".charAt((int) arg-1) + "方获得了胜利", "游戏结束提示",
-                        JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             }else{
                 JOptionPane.showConfirmDialog(null, "游戏结束，没有人获得胜利", "游戏结束提示",
-                        JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             }
             //计时停止
             time.stop();
@@ -137,7 +144,7 @@ public class Game extends JFrame implements Observer {
 
     /**
      * 模式选择： 双人，自动重新开始
-     * @param e
+     * @param e 鼠标事件
      */
     private void menuItem1MousePressed(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
@@ -157,18 +164,18 @@ public class Game extends JFrame implements Observer {
     
     /**
      * 切换背景
-     * @param e
+     * @param e 鼠标事件，点击了切换背景
      */
     private void menuItem5MousePressed(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
             //点了切换背景
-            backGround.changeBackground();
+            backGroundCommand.execute();
         }
     }
 
     /***
      * 重新开始按钮监听
-     * @param e
+     * @param e 鼠标事件
      */
     private void menuItem3MousePressed(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
@@ -178,13 +185,11 @@ public class Game extends JFrame implements Observer {
 
     /**
      * 悔棋
-     * @param e
+     * @param e 鼠标事件，点击了悔棋
      */
-
     private void menuItem4MousePressed(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
-            System.out.println("悔棋");
-            judge.remove();
+            judge.remove(); //裁判执行悔棋操作
             repaint();
         }
     }
@@ -192,7 +197,7 @@ public class Game extends JFrame implements Observer {
 
     /**
      * 单人模式
-     * @param e
+     * @param e 鼠标事件，点击了单人模式
      */
     private void menuItem2MousePressed(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
@@ -202,7 +207,6 @@ public class Game extends JFrame implements Observer {
         }
     }
     private void menuItem7MousePressed(MouseEvent e) {
-        // TODO add your code here
         if(e.getButton()==MouseEvent.BUTTON1){
             //点了观战人机
             label4.setText("机器对弈");
@@ -212,7 +216,7 @@ public class Game extends JFrame implements Observer {
     }
     /**
      * 棋盘面板的监听
-     * @param e
+     * @param e 鼠标事件，点了棋盘区域类
      */
     private void pieceboardMouseClicked(MouseEvent e) {
         //获取棋盘的起始坐标
@@ -237,10 +241,12 @@ public class Game extends JFrame implements Observer {
 
     /**
      * 音乐切换
-     * @param e
+     * @param e 鼠标事件
      */
     private void menuItem6MousePressed(MouseEvent e) {
-        //TODO
+        if(e.getButton()==MouseEvent.BUTTON1){
+            musicCommand.execute();
+        }
     }
 
 
@@ -467,36 +473,7 @@ public class Game extends JFrame implements Observer {
     private PieceBoardPanel pieceboard;
     private JPanel footer;
     private JLabel label8;
+    private BackGround backGround;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-
-
-    /**
-     * 背景类
-     * 用于切换背景，切换主题
-     */
-    class BackGround extends JPanel {
-        private ImageIcon imageIcon;
-        public BackGround() {
-            imageIcon = Setting.background[0];
-        }
-
-        @Override
-        public void paint(Graphics g) {
-            super.paint(g);
-            g.drawImage(imageIcon.getImage(),0,0,getWidth(),getHeight(),null);//图片自适应
-            //设置透明色的方法
-            g.setColor(new Color(255, 255, 255, 100));
-            g.fillRect(0,0,getWidth(),getHeight());
-        }
-
-        public void changeBackground() {
-            int size = 0;
-            while (imageIcon!=Setting.background[size]){
-                size++;
-            }
-            imageIcon = Setting.background[(size+1)%Setting.background.length];
-            repaint();
-        }
-    }
 }

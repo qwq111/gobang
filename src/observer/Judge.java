@@ -1,5 +1,6 @@
-package other;
+package observer;
 
+import config.Setting;
 import memento.PieceBoard;
 import memento.Position;
 
@@ -11,7 +12,7 @@ import java.util.Observer;
  * 负责对棋盘进行操作，包括下棋，悔棋
  */
 public class Judge extends Observable implements Observer {
-    private PieceBoard board;// 所观察的棋盘
+    private final PieceBoard board;// 所观察的棋盘
 
     public Judge(PieceBoard board) {
         super();
@@ -21,7 +22,6 @@ public class Judge extends Observable implements Observer {
 
     /**
      * 通知裁判执行悔棋操作，单次悔棋悔2子
-     * @return
      */
     public void remove(){
         System.out.println("悔棋");
@@ -33,11 +33,11 @@ public class Judge extends Observable implements Observer {
      * 检查棋盘，判断是否胜利,然后通知观察者
      */
     private void checkBoard(Position p){
+        //和棋
         if(board.getPieceNums()== Setting.BOARD_SIZE*Setting.BOARD_SIZE) {
             setChanged();
             notifyObservers(0);
-        }
-        if(check(board.getPieces(),p)){
+        }else if(check(board.getPieces(),p)){
             board.stop();//裁判调整棋盘状态，设置为不可以下棋
             setChanged();//通知观察者
             notifyObservers(p.getChess());
@@ -120,8 +120,8 @@ public class Judge extends Observable implements Observer {
 
     /**
      * 棋盘通知裁判进行检查
-     * @param o
-     * @param arg
+     * @param o 目标
+     * @param arg 参数
      */
     @Override
     public void update(Observable o, Object arg) {

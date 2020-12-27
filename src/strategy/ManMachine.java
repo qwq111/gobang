@@ -5,7 +5,8 @@ import player.Player;
  * 策略模式，人机对战
  */
 public class ManMachine implements Strategy {
-    private Player player1,player2;
+    private final Player player1;
+    private final Player player2;
 
     public ManMachine(Player player1, Player player2) {
         this.player1 = player1;
@@ -19,12 +20,16 @@ public class ManMachine implements Strategy {
 
     @Override
     public void playGame(int x,int y) {
-        player1.play(x,y);
+        if(player1.isPlay()) {
+            player1.play(x, y);
+        }
         try{
             Thread.sleep(200);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        player2.play(x,y);
+        if(player2.isPlay()) {
+            player2.play(x, y);
+        }
     }
 }

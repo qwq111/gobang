@@ -1,10 +1,7 @@
-package other;
+package config;
 
 import javax.swing.*;
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.io.File;
-import java.net.URL;
 
 public class Setting {
     public final static ImageIcon[] background=new ImageIcon[]

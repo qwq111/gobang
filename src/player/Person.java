@@ -1,7 +1,6 @@
 package player;
 
 import memento.PieceBoard;
-import memento.Position;
 
 public class Person extends Player{
 
